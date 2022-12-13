@@ -14,19 +14,25 @@
             "request": "launch",
             "flutterMode": "debug",
             "type": "dart",
-            "deviceId": "android"
+            // "args": ["-d", "emulator-5554"]
+            "deviceId": "emulator-5554"
         },
         {
             "name": "Dev iPhone",
             "request": "launch",
             "flutterMode": "debug",
             "type": "dart",
-            "deviceId": "iphone"
+            "deviceId": "B9B790D4-44BE-421E-8F9B-855B97B062D6"
+        },
+        {
+            "name": "Deb Web",
+            "request": "launch",
+            "type": "dart",
+            "args": ["-d", "chrome"]
         },
         {
             "name": "Run Prod",
             "request": "launch",
-            "program": "lib/main.dart",
             "flutterMode": "release",
             "type": "dart",
             "args": ["--flavor", "production"]
