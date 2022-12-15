@@ -1,4 +1,6 @@
-import 'package:dart_appwrite/dart_appwrite.dart';
+import 'dart:developer';
+
+import 'package:appwrite/appwrite.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -95,8 +97,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       }
 
       _loading();
-    } on AppwriteException catch (e, st) {
-      _showError(e.message!);
+    } on Exception catch (e, st) {
+      log(e.toString());
+      _showError((e as AppwriteException).message!);
       _loading();
     }
   }

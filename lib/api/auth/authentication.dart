@@ -27,7 +27,8 @@ class Authentication {
     try {
       await account.createEmailSession(email: email, password: password);
     } on Exception catch (e) {
-      debugPrint('Logged Error\n${e.toString()}');
+      log('Logged Error\n${e.toString()}');
+      rethrow;
     }
   }
 
@@ -37,7 +38,7 @@ class Authentication {
           userId: ID.unique(), email: email, password: password);
       await account.createEmailSession(email: email, password: password);
     } on Exception catch (e) {
-      debugPrint('Signup Error\n${e.toString()}');
+      log('Signup Error\n${e.toString()}');
     }
   }
 
