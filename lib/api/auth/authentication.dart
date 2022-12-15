@@ -18,6 +18,7 @@ class Authentication {
       return await account.get();
     } on AppwriteException catch (e, st) {
       log(e.toString());
+      print(e.response);
       return null;
     }
   }
