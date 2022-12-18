@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mingle/pages/home/home_page.dart';
+import 'package:mingle/pages/home/users_list_page.dart';
 import 'package:mingle/pages/loading_page.dart';
+import 'package:mingle/pages/login/create_account.dart';
 import 'package:mingle/pages/login/login_page.dart';
+import 'package:mingle/pages/settings/settings_page.dart';
 import 'package:mingle/pages/welcome_page.dart';
 import 'package:mingle/providers/auth.dart';
 import 'package:mingle/providers/user_data.dart';
@@ -52,10 +56,10 @@ class _MainAppState extends ConsumerState<MainApp> {
       home: const AuthChecker(),
       routes: {
         LoginPage.routename: (context) => const LoginPage(),
-        // HomePage.routename: (context) => const LoginPage(),
-        // CreateAccountPage.routename: (context) => const LoginPage(),
-        // UsersListPage.routename: (context) => const LoginPage(),
-        // SettingsPage.routename: (context) => const LoginPage(),
+        HomePage.routename: (context) => const HomePage(),
+        CreateAccountPage.routename: (context) => const CreateAccountPage(),
+        UsersListPage.routename: (context) => const UsersListPage(),
+        SettingsPage.routename: (context) => const SettingsPage(),
       },
     );
   }
@@ -68,7 +72,7 @@ class AuthChecker extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isLoggedIn = ref.watch(userLoggedInProvider);
     if (isLoggedIn == true) {
-      return Container(); // HomePage();
+      return const HomePage();
     } else if (isLoggedIn == false) {
       return const WelcomePage();
     }

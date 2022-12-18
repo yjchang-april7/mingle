@@ -5,7 +5,6 @@ import 'dart:typed_data';
 
 class MingleUser {
   final String id;
-  final String uid;
   final String email;
   final String name;
   final String? bio;
@@ -13,7 +12,6 @@ class MingleUser {
   final String? imgId;
   MingleUser({
     required this.id,
-    required this.uid,
     required this.email,
     required this.name,
     this.bio,
@@ -23,7 +21,6 @@ class MingleUser {
 
   MingleUser copyWith({
     String? id,
-    String? uid,
     String? email,
     String? name,
     String? bio,
@@ -32,7 +29,6 @@ class MingleUser {
   }) {
     return MingleUser(
       id: id ?? this.id,
-      uid: uid ?? this.uid,
       email: email ?? this.email,
       name: name ?? this.name,
       bio: bio ?? this.bio,
@@ -44,7 +40,6 @@ class MingleUser {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'uid': uid,
       'email': email,
       'name': name,
       'bio': bio,
@@ -55,7 +50,6 @@ class MingleUser {
   factory MingleUser.fromMap(Map<String, dynamic> map) {
     return MingleUser(
       id: map['id'] as String,
-      uid: map['uid'] as String,
       email: map['email'] as String,
       name: map['name'] as String,
       bio: map['bio'] != null ? map['bio'] as String : null,
@@ -70,15 +64,15 @@ class MingleUser {
 
   @override
   String toString() {
-    return 'MingleUser(id: $id, uid: $uid, email: $email, name: $name, bio: $bio)';
+    return 'MingleUser(id: $id, email: $email, name: $name, bio: $bio)';
   }
 
   @override
-  bool operator ==(covariant MingleUser other) {
+  bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other.id == id &&
-        other.uid == uid &&
+    return other is MingleUser &&
+        other.id == id &&
         other.email == email &&
         other.name == name &&
         other.bio == bio &&
@@ -89,7 +83,6 @@ class MingleUser {
   @override
   int get hashCode {
     return id.hashCode ^
-        uid.hashCode ^
         email.hashCode ^
         name.hashCode ^
         bio.hashCode ^

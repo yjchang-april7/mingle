@@ -20,7 +20,7 @@ class UserData {
 
   Future<void> addUser(String name, String bio, String imgId) async {
     final res = await account.get();
-
+    log('UserData.addUser \$id=${res.$id}');
     try {
       await account.updateName(name: name);
       await database.createDocument(
@@ -32,6 +32,7 @@ class UserData {
             'bio': bio,
             'email': res.email,
             'id': res.$id,
+            'imgId': imgId
           },
           permissions: [
             Permission.read(Role.any()),
@@ -52,7 +53,8 @@ class UserData {
           documentId: user.$id);
 
       // avatar 이미지 요청
-      return MingleUser.fromMap(data.data).copyWith(image: null);
+      final img = await _getProfilePicture(data.data['imgId']);
+      return MingleUser.fromMap(data.data).copyWith(image: img);
     } on AppwriteException catch (e, st) {
       print(e);
       rethrow;
@@ -73,13 +75,14 @@ class UserData {
       if (temp.isEmpty) {
         return users;
       }
-      temp.forEach((element) {
-        // request avatar image
-        users.add(MingleUser.fromMap(element.data).copyWith(image: null));
-      });
+      for (var element in temp) {
+        final memImage =
+            await _getProfilePicture(element.data['imgId'] as String);
+        users.add(MingleUser.fromMap(element.data).copyWith(image: memImage));
+      }
       return users;
     } on AppwriteException catch (e, st) {
-      print(e);
+      log('getUserList Error\n${e.message}');
       rethrow;
     }
   }
@@ -91,8 +94,10 @@ class UserData {
   ) async {
     try {
       appwrite_models.Account res = await account.get();
+      log('account.\$id = ${res.$id}');
       final bytes = imageBytes.map((e) => e).toList();
 
+      log('storage.createFile bucketId=${ApiInfo.storageBucketId}');
       appwrite_models.File? result = await storage.createFile(
         bucketId: ApiInfo.storageBucketId,
         fileId: ID.unique(),
@@ -106,9 +111,10 @@ class UserData {
           Permission.read(Role.user(res.$id)),
         ],
       );
+      log('image.\$id = ${result.$id}');
       return result.$id;
     } catch (e) {
-      log('$e');
+      log('storage.createFile Error \n ${(e as AppwriteException).message}');
       rethrow;
     }
   }
@@ -119,7 +125,7 @@ class UserData {
           bucketId: ApiInfo.storageBucketId, fileId: fileId);
       return data;
     } on AppwriteException catch (e, st) {
-      log('$e');
+      log('_getProfilePicture Error \n${e.message}');
       rethrow;
     }
   }

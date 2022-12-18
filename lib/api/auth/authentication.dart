@@ -17,8 +17,7 @@ class Authentication {
     try {
       return await account.get();
     } on AppwriteException catch (e, st) {
-      log(e.toString());
-      print(e.response);
+      log('getAccount Error\n${e.message}');
       return null;
     }
   }
@@ -34,11 +33,16 @@ class Authentication {
 
   Future<void> signUp(String email, String password) async {
     try {
+      log('account.create ${email}');
       await account.create(
           userId: ID.unique(), email: email, password: password);
-      await account.createEmailSession(email: email, password: password);
+      log('account.createEmailSession ${email}');
+      appwrite_models.Session session =
+          await account.createEmailSession(email: email, password: password);
+      log('session = ${session.toString()}');
     } on Exception catch (e) {
       log('Signup Error\n${e.toString()}');
+      rethrow;
     }
   }
 
@@ -46,7 +50,8 @@ class Authentication {
     try {
       await account.deleteSession(sessionId: 'current');
     } on Exception catch (e) {
-      debugPrint('Logout Error\n${e.toString()}');
+      log('Logout Error\n${e.toString()}');
+      rethrow;
     }
   }
 }

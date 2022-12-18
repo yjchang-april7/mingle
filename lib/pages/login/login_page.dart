@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mingle/api/auth/authentication.dart';
+import 'package:mingle/pages/home/home_page.dart';
+import 'package:mingle/pages/login/create_account.dart';
 import 'package:mingle/providers/auth.dart';
 import 'package:mingle/themes.dart';
 
@@ -34,6 +36,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   bool _isLoading = false;
 
   void _loading() {
+    if (!mounted) return;
+
     setState(() {
       _isLoading = !_isLoading;
     });
@@ -85,15 +89,15 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           return;
         }
 
-        await Navigator.pushReplacementNamed(context, 'HomePage.routename');
+        await Navigator.of(context).pushReplacementNamed(HomePage.routename);
       } else {
         await auth.signUp(_email.text, _password.text);
         if (!mounted) {
           return;
         }
 
-        await Navigator.pushReplacementNamed(
-            context, 'CreateAccountPage.routename');
+        await Navigator.of(context)
+            .pushReplacementNamed(CreateAccountPage.routename);
       }
 
       _loading();
