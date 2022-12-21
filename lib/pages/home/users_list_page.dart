@@ -18,12 +18,16 @@ class _UsersListPageState extends ConsumerState<UsersListPage> {
   ListTile usersTile(
       {required String name,
       String? bio,
-      required Uint8List imageUrl,
+      required Uint8List? imageUrl,
       VoidCallback? onTap}) {
     return ListTile(
-      leading: CircleAvatar(
-        backgroundImage: MemoryImage(imageUrl),
-      ),
+      leading: (imageUrl != null)
+          ? CircleAvatar(
+              backgroundImage: MemoryImage(imageUrl),
+            )
+          : CircleAvatar(
+              backgroundImage: AssetImage('assets/images/avatar.png'),
+            ),
       title: Text(name),
       subtitle: Text(bio ?? ''),
       onTap: onTap ?? () {},
@@ -67,7 +71,7 @@ class _UsersListPageState extends ConsumerState<UsersListPage> {
             usersTile(
               name: user.name,
               bio: user.bio,
-              imageUrl: user.image as Uint8List,
+              imageUrl: user.image,
               onTap: () => onTap(user.id, user),
             ),
           );

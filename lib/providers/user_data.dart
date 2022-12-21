@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mingle/models/user.dart';
 import 'package:mingle/providers/client.dart';
@@ -9,6 +11,7 @@ final userDataClassProvider = Provider<UserData>((ref) {
 });
 
 final usersListProvider = FutureProvider<List<MingleUser>>((ref) {
+  log('usersListProvider');
   return ref.watch(userDataClassProvider).getUsersList();
 });
 

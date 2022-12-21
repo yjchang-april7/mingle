@@ -65,6 +65,7 @@ class UserData {
   }
 
   Future<List<MingleUser>> getUsersList() async {
+    log('getUsersList');
     try {
       final response = await database.listDocuments(
           databaseId: ApiInfo.databaseId,
@@ -119,14 +120,14 @@ class UserData {
     }
   }
 
-  Future<Uint8List> _getProfilePicture(String fileId) async {
+  Future<Uint8List?> _getProfilePicture(String fileId) async {
     try {
       final data = await storage.getFilePreview(
           bucketId: ApiInfo.storageBucketId, fileId: fileId);
       return data;
     } on AppwriteException catch (e, st) {
       log('_getProfilePicture Error \n${e.message}');
-      rethrow;
+      return null;
     }
   }
 }

@@ -63,7 +63,7 @@ class _CreateAccountPageState extends ConsumerState<CreateAccountPage> {
               .then((imgId) =>
                   _userData.addUser(_name.text, _bio.text, imgId ?? ''))
           : await _userData.addUser(
-              _name.text, _bio.text, 'assets/images/profile.png');
+              _name.text, _bio.text, 'assets/images/avatar.png');
       log('_userData.getCurrentUser');
       final userData = await _userData.getCurrentUser();
       ref.watch(currentLoggedUserProvider.notifier).update((state) => userData);

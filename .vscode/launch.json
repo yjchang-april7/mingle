@@ -4,6 +4,7 @@
     // 자세한 내용을 보려면 https://go.microsoft.com/fwlink/?linkid=830387을(를) 방문하세요.
     "version": "0.2.0",
     "configurations": [
+
         {
             "name": "Current Device",
             "request": "launch",
@@ -14,7 +15,6 @@
             "request": "launch",
             "flutterMode": "debug",
             "type": "dart",
-            // "args": ["-d", "emulator-5554"]
             "deviceId": "emulator-5554"
         },
         {
@@ -22,7 +22,7 @@
             "request": "launch",
             "flutterMode": "debug",
             "type": "dart",
-            "deviceId": "B9B790D4-44BE-421E-8F9B-855B97B062D6"
+            "deviceId": "iphone"
         },
         {
             "name": "Deb Web",

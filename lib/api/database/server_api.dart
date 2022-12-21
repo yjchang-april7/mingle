@@ -36,7 +36,8 @@ class ServerApi {
             '${curruserId.splitByLength((curruserId.length) ~/ 2)[0]}_${otheruserId.splitByLength((otheruserId.length) ~/ 2)[0]}',
       );
     } on AppwriteException catch (e) {
-      if (e.code == 404) {
+      log(e.toString());
+      if (e.code == 404 || e.code == 401) {
         try {
           collection = await database.getCollection(
             databaseId: ApiInfo.databaseId,
@@ -44,7 +45,7 @@ class ServerApi {
                 '${otheruserId.splitByLength((otheruserId.length) ~/ 2)[0]}_${curruserId.splitByLength((curruserId.length) ~/ 2)[0]}',
           );
         } on AppwriteException catch (e) {
-          if (e.code == 404) {
+          if (e.code == 404 || e.code == 401) {
             collection = await database.createCollection(
                 databaseId: ApiInfo.databaseId,
                 collectionId:
