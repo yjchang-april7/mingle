@@ -56,9 +56,13 @@ class ChatPage extends ConsumerWidget {
         leadingWidth: 20,
         elevation: 0,
         title: ListTile(
-          leading: CircleAvatar(
-            backgroundImage: MemoryImage(chatUser.image!),
-          ),
+          leading: (chatUser.image != null)
+              ? CircleAvatar(
+                  backgroundImage: MemoryImage(chatUser.image!),
+                )
+              : CircleAvatar(
+                  backgroundImage: AssetImage('assets/images/avatar.png'),
+                ),
           title: Text(chatUser.name),
         ),
         actions: [

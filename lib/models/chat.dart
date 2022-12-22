@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
+import 'dart:developer';
 
 enum MessageType {
   TEXT,
@@ -39,20 +40,20 @@ class Chat {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'senderName': senderName,
-      'senderId': senderId,
+      'sender_name': senderName,
+      'sender_id': senderId,
       'message': message,
-      'type': type.name,
+      'message_type': type.name,
       'time': time.toIso8601String(),
     };
   }
 
   factory Chat.fromMap(Map<String, dynamic> map) {
     return Chat(
-      senderName: map['senderName'] as String,
-      senderId: map['senderId'] as String,
+      senderName: map['sender_name'] as String,
+      senderId: map['sender_id'] as String,
       message: map['message'] as String,
-      type: MessageType.values[map['type']],
+      type: MessageType.values.byName(map['message_type']),
       time: DateTime.parse(map['time']),
     );
   }
